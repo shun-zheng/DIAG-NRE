@@ -32,7 +32,7 @@ to prepare a basic python environment.
 # activate the conda env
 source activate diag-nre
 # set proper environment variables, including 'PATH', 'PYTHONPATH', 'WORK_DIR', etc.
-source ./set_env.sh
+source ./shell/set_env.sh
 ```
 
 
