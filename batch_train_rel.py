@@ -5,7 +5,7 @@
 from itertools import product
 import os
 
-from batch_common import batch_do_task, TOTAL_REL_DIRS, \
+from batch_common import batch_do_task, TOTAL_REL_DIRS, TOTAL_CV_EPOCHS, \
     REL_TRAIN_COMMAND_TEMPLATE, REL_CONFIG_BASE, REL_CONFIG_NAME_TEMPLATE
 from rule_helpers import relation_model_prefix_template
 
@@ -16,18 +16,17 @@ if __name__ == '__main__':
     model_type = 'AttBiLSTM'
     label_type = 'soft'
     train_type = 'train_ds'
-    max_epoch = 3
 
-    task_args = [
-        {
+    for rel_dir, max_epoch in zip(TOTAL_REL_DIRS, TOTAL_CV_EPOCHS):
+        task_arg = {
             'TRAIN_TYPE': train_type,
             'arg_model_store_name_prefix': relation_model_prefix_template.format(model_type, train_type),
             'arg_model_type': model_type,
             'arg_max_epoch': max_epoch,
             'arg_train_label_type': label_type,
         }
-    ]
-    total_task_rel_args += list(product(TOTAL_REL_DIRS, task_args))
+
+        total_task_rel_args.append((rel_dir, task_arg))
 
     if not os.path.exists('.vector_cache'):
         # just start one job to prepare the cache for Glove embeddings

@@ -184,17 +184,6 @@ class RelationEnv(RelationTask):
                                        self.raw_example_batch.Label)
         self.current_pred_logps = None
 
-        # old version 2
-        # # set forward lstm hidden tensor and cell tensor
-        # hx = self.backward_lstm_emb.new_zeros(1, self.net.hidden_size, requires_grad=False)  # 1 x hidden_size
-        # self.forward_lstm_state = (hx, hx)
-        # # reset state relevant variables
-        # self.step_index = 0
-        # self.step_length = init_words.size(0)
-        # self.prev_actions = []
-        # state = self.get_state_embedding_at(self.step_index)
-        # return state
-
     def create_new_batch(self):
         # get an initial word index copy
         init_words = torch.tensor(self.raw_example_batch.Text[0])
@@ -281,7 +270,6 @@ class RelationEnv(RelationTask):
             return total_reward
         return 0
 
-    # TODO: how to design a better state embedding
     def get_state_embedding_at(self, step):
         """
         Define how to get state embedding for each step
@@ -550,7 +538,8 @@ class EraseAgent(object):
                 if rand_flag:
                     if eps_flag and random.random() < eps_value:
                         # this hopes to prevent overfitting at training stage
-                        action_idx = np.random.choice(action_size, p=action_prob[::-1])
+                        action_idx = np.random.choice(action_size)
+                        # action_idx = np.random.choice(action_size, p=action_prob[::-1])
                     else:
                         action_idx = np.random.choice(action_size, p=action_prob)
                 else:

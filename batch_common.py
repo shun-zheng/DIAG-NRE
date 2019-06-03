@@ -27,6 +27,9 @@ UW_REL_DIRS = [
     'uw_peo_place_of_death',
 ]
 TOTAL_REL_DIRS = NYT_REL_DIRS + UW_REL_DIRS
+# The best epoch to stop training for each relation type,
+# which can be obtained by conducting the cross validation on the training set
+TOTAL_CV_EPOCHS = [1, 1, 2, 2, 1, 2, 2, 3, 2, 1, 1, 2, 1, 1,]
 
 # common global directory path
 WORK_DIR = os.environ['WORK_DIR']

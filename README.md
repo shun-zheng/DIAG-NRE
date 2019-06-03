@@ -42,7 +42,7 @@ We have preprocessed the [NYT](http://iesl.cs.umass.edu/riedel/ecml/) dataset an
 the [UW](https://www.cs.washington.edu/ai/gated_instructions/naacl_data.zip) as mentioned in the paper.
 
 1. Download our preprocessed data collection associated with human diagnostic annotations,
-[base_data.zip](https://drive.google.com/open?id=1BU3qtvaP6GRt1iWNaB3vPyNptmnUSaLD),
+[base_data.zip](https://drive.google.com/open?id=1CpCqlwDjVmLlu9bUYRb3yyrl5WeBF7zn),
 into the current directory.
 
 2. Run the following codes to prepare well-formatted data for subsequent model training

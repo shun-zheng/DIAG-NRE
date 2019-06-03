@@ -75,9 +75,16 @@ def batch_update_rule_info(rel_args):
     print('-'*15, 'Batch update rule statistics information', '-'*15)
     # build environment
     rel_env = RelationEnv(rel_args)
+
+    # use all kinds of rule files
     # rule_file_prefix = rule_file_name_template.split('{}')[0]
-    train_fprob = rel_env.config['policy_train_filter_prob']
-    rule_file_prefix = rule_file_name_template.split('_eta')[0].format(rel_env.model_type, train_fprob)
+
+    # use certain rule files (fix model and fprob)
+    # train_fprob = rel_env.config['policy_train_filter_prob']
+    # rule_file_prefix = rule_file_name_template.split('_eta')[0].format(rel_env.model_type, train_fprob)
+
+    # use certain rule files (fix model)
+    rule_file_prefix = rule_file_name_template.split('_fprob')[0].format(rel_env.model_type)
 
     max_diag_anno = rel_env.config['max_diag_anno']
     raw_diag_anno = len(rel_env.raw_dev_examples)
@@ -215,7 +222,7 @@ def rule_diagnosis_and_retrain(rel_args, pos_rule_infos=None, neg_rule_infos=Non
             pickle.dump(rule_infos, fout)
         print('Dump {} into {}'.format(dump_obj_name, dump_path))
     print('{} [RULE DIAGNOSIS AND RETRAIN] starts'.format(time.asctime()))
-    train_type_template = 'train_diagnosis_{}'
+    train_type_template = 'train_diag_{}'
     pos_rule_file_template = 'pos_rule_info_model{}_{}.pkl'
     neg_rule_file_template = 'neg_rule_info_model{}_{}.pkl'
     train_filter_prob = rel_args.policy_train_filter_prob
@@ -280,15 +287,9 @@ def rule_diagnosis_and_retrain(rel_args, pos_rule_infos=None, neg_rule_infos=Non
     if pos_filter_cond is None or neg_filter_cond is None:
         tmp_suffix = 'manual'
         train_type = train_type_template.format(tmp_suffix)
-        # pos_rule_file = pos_rule_file_template.format(model_type, tmp_suffix)
-        # neg_rule_file = neg_rule_file_template.format(model_type, tmp_suffix)
     else:
-        # tmp_suffix = 'pdmn{}_pda{}_ndmn{}_nda{}'.format(
-        #     pos_filter_cond['min_dev_match_num'], pos_filter_cond['min_dev_acc'],
-        #     neg_filter_cond['min_dev_match_num'], neg_filter_cond['max_dev_acc'])
-        # tmp_suffix = 'rule'
         max_diag_anno = rel_args.max_diag_anno
-        tmp_suffix = 'rule_mda{}'.format(max_diag_anno)  # the maximum number of diagnostic annotations
+        tmp_suffix = 'mda{}'.format(max_diag_anno)  # the maximum number of diagnostic annotations used
         train_type = train_type_template.format(tmp_suffix)
         pos_rule_file = pos_rule_file_template.format(model_type, tmp_suffix)
         neg_rule_file = neg_rule_file_template.format(model_type, tmp_suffix)
@@ -299,24 +300,23 @@ def rule_diagnosis_and_retrain(rel_args, pos_rule_infos=None, neg_rule_infos=Non
     data_dir = os.path.dirname(raw_train_path)
     # estimate ds parameters
     if adaptive_ds_flag:
-        # this is improper because the selected data are highly biased.
+        # this option is deprecated because the selected data are highly biased,
+        # which is improper for estimations of DS parameters.
         ds_acc = estimate_distant_supervision_accuracy(data_dir, rel_task.train_set.examples,
                                                        dev_anno_file='rule_anno_dev.csv')
-        if ds_acc < 0.8:
-            ds_acc = 0.8
         train_type += '_adapt'
     else:
-        # default choise is to assign DS with a prior fixed parameter
+        # default choise is to assign DS with a fixed prior parameter
         ds_acc = 0.8
 
     new_train_path = os.path.join(data_dir, '{}.csv'.format(train_type))
-    new_model_prefix = relation_model_prefix_template.format(rel_task.model_type, train_type)
 
     # create diagnosed training data
     create_diagnosed_train_data(rel_task.train_set.examples, pos_rule_infos, neg_rule_infos, raw_train_path,
                                 new_data_path=new_train_path, ds_param=(ds_acc, 1.0))
 
     # # retrain relation model
+    # new_model_prefix = relation_model_prefix_template.format(rel_task.model_type, train_type)
     # retrain_and_evaluate(rel_task, new_train_path, new_model_prefix, rel_task.dev_iter)
 
     print('{} [RULE DIAGNOSIS AND RETRAIN] ends'.format(time.asctime()))

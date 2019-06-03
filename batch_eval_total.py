@@ -26,4 +26,4 @@ if __name__ == '__main__':
 
     batch_do_task(total_task_rel_args,
                   AGENT_CONFIG_BASE, AGENT_CONFIG_NAME_TEMPLATE, TOTAL_EVAL_COMMAND_TEMPLATE,
-                  max_gpu_mem_usage=0.4)
+                  max_gpu_mem_usage=0.3)

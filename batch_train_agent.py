@@ -14,7 +14,7 @@ if __name__ == '__main__':
 
     train_type = 'train_ds'
     model_type = 'AttBiLSTM'
-    for eta in [0.1, 0.5, 1.0, 1.5]:
+    for eta in [0.05, 0.1, 0.5, 1.0, 1.5]:
         for fprob in [1e4]:
             task_args = [{
                 'TRAIN_TYPE': train_type,
@@ -29,4 +29,4 @@ if __name__ == '__main__':
 
     batch_do_task(total_task_rel_args,
                   AGENT_CONFIG_BASE, AGENT_CONFIG_NAME_TEMPLATE, AGENT_TRAIN_COMMAND_TEMPLATE,
-                  max_gpu_mem_usage=0.003)
+                  max_gpu_mem_usage=0.01)

@@ -13,15 +13,13 @@ if __name__ == '__main__':
 
     train_type = 'train_ds'
     train_fprob = 1e4
-    max_epoch = 3
     task_args = [{
         'TRAIN_TYPE': train_type,
         'arg_policy_train_filter_prob': train_fprob,
-        'arg_max_epoch': max_epoch,
     }]
     total_task_rel_args += list(product(TOTAL_REL_DIRS, task_args))
 
     batch_do_task(total_task_rel_args,
                   DIAGNOSIS_CONFIG_BASE, DIAGNOSIS_CONFIG_NAME_TEMPALTE, DIAGNOSIS_COMMAND_TEMPLATE,
-                  max_gpu_mem_usage=0.01)
+                  max_gpu_mem_usage=0.05)
 
