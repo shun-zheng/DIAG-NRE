@@ -13,7 +13,6 @@ if __name__ == '__main__':
     model_type = 'AttBiLSTM'
     label_type = 'soft'
     train_type = 'train_ds'
-    max_epoch = 1
 
     # After generating all kinds of training labels,
     # use the following code with multiple random seeds to produce final results
