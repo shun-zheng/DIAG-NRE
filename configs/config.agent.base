@@ -16,6 +16,7 @@ arg_vocab_freq_file=$DIR_PREFIX/data/$REL_DIR_NAME/vocab_freq.csv
 arg_model_dir=$DIR_PREFIX/model/$REL_DIR_NAME
 arg_model_store_name_prefix=att_bi_lstm.train_ds
 arg_model_resume_name=${arg_model_store_name_prefix}.best
+arg_model_resume_suffix=best
 
 # agent parameters
 arg_policy_train_filter_prob=0.5

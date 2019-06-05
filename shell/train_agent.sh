@@ -29,6 +29,7 @@ EXEC_COMMAND="CUDA_VISIBLE_DEVICES=$CUDA_DEVICES python -m agent_train \
 	--model_dir=$arg_model_dir \
 	--model_store_name_prefix=$arg_model_store_name_prefix \
 	--model_resume_name=$arg_model_resume_name \
+    --model_resume_suffix=$arg_model_resume_suffix \
     --policy_train_filter_prob=$arg_policy_train_filter_prob \
     --policy_reward_eta=$arg_policy_reward_eta \
     --policy_reward_gamma=$arg_policy_reward_gamma \

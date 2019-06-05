@@ -80,6 +80,8 @@ def parse_args(in_args=None):
                             help='Model checkpoint file name prefix')
     arg_parser.add_argument('--model_resume_name', type=str, default='att_bi_lstm.th.best',
                             help='Model resume file name')
+    arg_parser.add_argument('--model_resume_suffix', type=str, default='best',
+                            help='Model resume file suffix')
 
     # for reinforcement erasure
     arg_parser.add_argument('--policy_train_filter_prob', type=float, default=0.5,

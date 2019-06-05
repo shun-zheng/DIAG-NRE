@@ -27,8 +27,11 @@ def deep_rule_extraction(rel_args, train_agent_flag=True):
     reward_eta = rel_env.config['policy_reward_eta']
     train_filter_prob = rel_env.config['policy_train_filter_prob']
 
-    erasure_saved_file = erasure_file_name_template.format(model_type, train_filter_prob, reward_eta)
-    rule_saved_file = rule_file_name_template.format(model_type, train_filter_prob, reward_eta)
+    model_suffix = rel_env.config['model_resume_suffix']
+    model_str = '{}-{}'.format(model_type, model_suffix)
+
+    erasure_saved_file = erasure_file_name_template.format(model_str, train_filter_prob, reward_eta)
+    rule_saved_file = rule_file_name_template.format(model_str, train_filter_prob, reward_eta)
 
     erasure_file_path = os.path.join(rel_env.config['model_dir'], erasure_saved_file)
     rule_file_path = os.path.join(rel_env.config['model_dir'], rule_saved_file)
@@ -37,7 +40,7 @@ def deep_rule_extraction(rel_args, train_agent_flag=True):
         # 0. Filter training examples for erasure agent
         rel_env.filter_environment_train_set(pred_filter_prob=train_filter_prob)
         # 1. Agent training with different reward_eta
-        policy_store_prefix = policy_store_prefix_template.format(model_type, train_filter_prob, reward_eta)
+        policy_store_prefix = policy_store_prefix_template.format(model_str, train_filter_prob, reward_eta)
         agent = EraseAgent(rel_env.config, rel_env.state_size, rel_env.device, resume_flag=False)
         agent.batch_train(rel_env, policy_store_prefix=policy_store_prefix)
         # 2. Agent evaluation to get erasure decisions on training set

@@ -2,7 +2,7 @@
 # @Time    : 25/7/18 22:47
 # @Author  : Shun Zheng
 
-from batch_common import batch_do_task, TOTAL_REL_DIRS, TOTAL_CV_EPOCHS, \
+from batch_common import batch_do_task, TOTAL_REL_DIRS, \
     REL_TRAIN_COMMAND_TEMPLATE, REL_CONFIG_BASE, REL_CONFIG_NAME_TEMPLATE
 from rule_helpers import relation_model_prefix_template
 
@@ -13,6 +13,7 @@ if __name__ == '__main__':
     model_type = 'AttBiLSTM'
     label_type = 'soft'
     train_type = 'train_ds'
+    max_epoch = 3
 
     # After generating all kinds of training labels,
     # use the following code with multiple random seeds to produce final results
@@ -20,7 +21,8 @@ if __name__ == '__main__':
         model_str = model_type + '_seed{}'.format(random_seed)
         for train_type in ['train_ds', 'train_diag_mda200']:
             # mda corresponds to the maximum diagnostic annotation
-            for rel_dir, max_epoch in zip(TOTAL_REL_DIRS, TOTAL_CV_EPOCHS):
+            # for rel_dir, max_epoch in zip(TOTAL_REL_DIRS, TOTAL_CV_EPOCHS):
+            for rel_dir in TOTAL_REL_DIRS:
                 task_arg = {
                     'arg_random_seed': random_seed,
                     'TRAIN_TYPE': train_type,

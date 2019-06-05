@@ -5,7 +5,7 @@
 from itertools import product
 import os
 
-from batch_common import batch_do_task, TOTAL_REL_DIRS, TOTAL_CV_EPOCHS, \
+from batch_common import batch_do_task, TOTAL_REL_DIRS, \
     REL_TRAIN_COMMAND_TEMPLATE, REL_CONFIG_BASE, REL_CONFIG_NAME_TEMPLATE
 from rule_helpers import relation_model_prefix_template
 
@@ -16,8 +16,9 @@ if __name__ == '__main__':
     model_type = 'AttBiLSTM'
     label_type = 'soft'
     train_type = 'train_ds'
+    max_epoch = 3
 
-    for rel_dir, max_epoch in zip(TOTAL_REL_DIRS, TOTAL_CV_EPOCHS):
+    for rel_dir in TOTAL_REL_DIRS:
         task_arg = {
             'TRAIN_TYPE': train_type,
             'arg_model_store_name_prefix': relation_model_prefix_template.format(model_type, train_type),
