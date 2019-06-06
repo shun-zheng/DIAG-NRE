@@ -50,7 +50,7 @@ source activate diag-nre
 source ./shell/set_env.sh
 ```
 
-`set_env.sh` will help to set proper environment variables, and create `logs` and 'model' directories when needed.
+`set_env.sh` will help to set proper environment variables, and create `logs` and `model` directories when needed.
 
 
 ## Data Preparation
