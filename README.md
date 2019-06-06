@@ -130,10 +130,10 @@ Run `python batch_eval_total.py` to aggregate all evaluation results.
 
 ### Log
 
-- **log.rel.**XXX, the log for NRE model training
-- **log.agent.**XXX, the log for agent network training and pattern generation
-- **log.diag.**XXX, the log for the pattern refinement
-- **log.eval_total.**XXX, the log for the final total evaluation
+- **log.rel**XXX, the log for NRE model training
+- **log.agent**XXX, the log for agent network training and pattern generation
+- **log.diag**XXX, the log for the pattern refinement
+- **log.eval_total**XXX, the log for the final total evaluation
 
 ### Model
 
