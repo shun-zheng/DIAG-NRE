@@ -22,18 +22,35 @@ Advantages of DIAG-NRE include:
 - interpreting from what kinds of noises the target relation type suffers.
 
 
+
+## Citation
+
+If you find our work interesting, you can cite the paper as
+
+```text
+@inproceedings{zheng2019diagnre,
+               title={DIAG-NRE: A Neural Pattern Diagnosis Framework for Distantly Supervised Neural Relation Extraction},
+               author={Zheng, Shun and Han, Xu and Lin, Yankai and Yu, Peilin and Chen, Lu and Huang, Ling and Liu, Zhiyuan and Xu, Wei},
+               booktitle={ACL},
+               year={2019}
+}
+```
+
+
 ## Setup
 
 1. Run `conda env create --file=environment.yml`
 to prepare a basic python environment.
 
-2. Then, when starting a fresh shell, please run the following codes first to set proper environment variables.
+2. Then, when starting a fresh shell, please run the following codes first.
 ```bash
 # activate the conda env
 source activate diag-nre
 # set proper environment variables, including 'PATH', 'PYTHONPATH', 'WORK_DIR', etc.
 source ./shell/set_env.sh
 ```
+
+`set_env.sh` will help to set proper environment variables, and create `logs` and 'model' directories when needed.
 
 
 ## Data Preparation
@@ -87,6 +104,20 @@ For users who need to apply DIAG-NRE to other data,
 you can extract instances to be annotated from the pattern hierarchy file,
 named as 'rule_hierarchy_model{}.pkl'.
 
+Example codes to check the pattern hierarchy
+```Python
+# load hierarchy
+import pickle
+with open('rule_hierarchy_file_path', 'rb') as fin:
+    pattern_hierarchy = pickle.load(fin)
+    
+# print hierarchy
+from rule_helpers import print_rule_hierarchy
+print_rule_hierarchy(pattern_hierarchy)
+```
+
+Note that, in this code, the term 'rule' shares the same notion with the term 'pattern' used in the paper.
+
 ### 3. Retraining & Evaluation
 
 Run `python batch_retrain_rel.py` to retrain multiple NRE models
@@ -95,15 +126,20 @@ with different random seeds for all kinds of labels.
 Run `python batch_eval_total.py` to aggregate all evaluation results.
 
 
-## Citation
+## File Specifications
 
-If you use our codes, please cite the paper 
+### Log
 
-```text
-@inproceedings{zheng2019diagnre,
-               title={DIAG-NRE: A Neural Pattern Diagnosis Framework for Distantly Supervised Neural Relation Extraction},
-               author={Zheng, Shun and Han, Xu and Lin, Yankai and Yu, Peilin and Chen, Lu and Huang, Ling and Liu, Zhiyuan and Xu, Wei},
-               booktitle={ACL},
-               year={2019}
-}
-```
+- **log.rel.**XXX, the log for NRE model training
+- **log.agent.**XXX, the log for agent network training and pattern generation
+- **log.diag.**XXX, the log for the pattern refinement
+- **log.eval_total.**XXX, the log for the final total evaluation
+
+### Model
+
+- **erasure_policy_model**XXX, the checkpoint of the agent network;
+- **rel_model**XXX, the checkpoint of the NRE model;
+- **train_erasure_decision_model**XXX, the pickled file for agent's decisions;
+- **rule_info_model**XXX, the pickled file storing pattern information derived from certain decision files;
+- **rule_hierarchy_model**XXX, the pickled file storing the constructed pattern hierarchy merged from multiple pattern information sources.
+

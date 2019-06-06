@@ -21,7 +21,6 @@ if __name__ == '__main__':
         model_str = model_type + '_seed{}'.format(random_seed)
         for train_type in ['train_ds', 'train_diag_mda200']:
             # mda corresponds to the maximum diagnostic annotation
-            # for rel_dir, max_epoch in zip(TOTAL_REL_DIRS, TOTAL_CV_EPOCHS):
             for rel_dir in TOTAL_REL_DIRS:
                 task_arg = {
                     'arg_random_seed': random_seed,

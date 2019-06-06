@@ -18,7 +18,7 @@ else
     echo 'Set CUDA_VISIBLE_DEVICES to default value (0)'
 fi
 
-NEW_LOG_NAME="log.eval_${LOG_NAME:4}"
+NEW_LOG_NAME="log.eval_total.${LOG_NAME:10}"
 EXEC_COMMAND="CUDA_VISIBLE_DEVICES=$CUDA_DEVICES python -m total_eval \
     --random_seed=$arg_random_seed \
 	--train_file=$arg_train_file \
