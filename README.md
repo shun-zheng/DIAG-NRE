@@ -3,6 +3,8 @@
 The implementation of the paper
 "DIAG-NRE: A Neural Pattern Diagnosis Framework for Distantly Supervised Neural Relation Extraction"
 
+This is a deprecated repo, please refer to [the thunlp version](https://github.com/thunlp/DIAG-NRE) for long-term maintaining.
+
 
 ## Overview
 
